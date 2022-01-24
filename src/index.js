@@ -1,8 +1,14 @@
 import React from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
-import ReactDOM  from "react-dom";
-import Home from "pages/Home";
-
-ReactDOM.render(<React.StrictMode>
-  <Home/>
-</React.StrictMode>, document.getElementById("root"));
+import ReactDOM from "react-dom";
+import App from "./App";
+import { BrowserRouter } from "react-router-dom";
+import UserContextPriver from "context/UserContext";
+import "index.css";
+ReactDOM.render(
+  <BrowserRouter>
+    <UserContextPriver>
+      <App />
+    </UserContextPriver>
+  </BrowserRouter>,
+  document.getElementById("root")
+);

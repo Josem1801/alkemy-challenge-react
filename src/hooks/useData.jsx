@@ -1,16 +1,38 @@
-import axios from "axios";
 import { useState, useEffect } from "react";
-import url from "data/url";
+import getRecipes from "services/getRecipes";
+
 function useData() {
-  const [data, setData] = useState();
-  async function getData() {
-    const currentData = await axios.get(url());
-    setData(currentData);
+  const [recipes, setRecipes] = useState([]);
+  const [loading, setLoading] = useState(false);
+  async function handleRecipes() {
+    setLoading(true);
+    try {
+      const { results } = await getRecipes("pasta&addRecipeInformation=true");
+      const recipesMaped = results.map(
+        ({ image, id, pricePerServing, readyInMinutes, title }) => ({
+          image,
+          id,
+          pricePerServing,
+          readyInMinutes,
+          title,
+        })
+      );
+      console.log(recipes);
+      setRecipes(recipesMaped);
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setLoading(false);
+    }
   }
   useEffect(() => {
-    getData();
+    handleRecipes();
   }, []);
-  return { data };
+  return { recipes, loading };
 }
 
 export default useData;
+
+useData.defaultProps = {
+  number: 4,
+};
