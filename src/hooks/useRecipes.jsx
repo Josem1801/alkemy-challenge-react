@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
 import getRecipes from "services/getRecipes";
 
-function useData() {
+function useRecipes() {
   const [recipes, setRecipes] = useState([]);
   const [loading, setLoading] = useState(false);
   async function handleRecipes() {
     setLoading(true);
     try {
-      const { results } = await getRecipes("pasta&addRecipeInformation=true");
+      const { results } = await getRecipes();
       const recipesMaped = results.map(
         ({ image, id, pricePerServing, readyInMinutes, title }) => ({
           image,
@@ -17,7 +17,6 @@ function useData() {
           title,
         })
       );
-      console.log(recipes);
       setRecipes(recipesMaped);
     } catch (err) {
       console.log(err);
@@ -31,8 +30,8 @@ function useData() {
   return { recipes, loading };
 }
 
-export default useData;
+export default useRecipes;
 
-useData.defaultProps = {
+useRecipes.defaultProps = {
   number: 4,
 };

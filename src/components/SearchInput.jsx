@@ -15,13 +15,20 @@ export default function SearchInput({ handleSearch }) {
     },
     onSubmit: async ({ search }) => {
       const joinWords = search.replace(/\s/g, "+");
+      let status, results;
       try {
-        const results = await getRecipes(10, joinWords);
-        const status = results instanceof Error ? "notFound" : "success";
-        handleSearch(results, status);
+        results = await getRecipes(10, joinWords);
+        status = results instanceof Error ? "error" : "success";
+        console.log();
+        if (results?.results.length === 0) {
+          status = "notFound";
+        }
       } catch (e) {
-        handleSearch([], "error");
+        results = { results: [] };
+        status = "error";
         console.log(`Ocurrio un error: ${e}`);
+      } finally {
+        handleSearch(results, status);
       }
     },
   });

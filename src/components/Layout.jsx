@@ -17,7 +17,7 @@ export default function Layout() {
   ];
   return (
     <div className="m-auto  bg-black min-h-screen min-w-full relative grid place-items-center ">
-      <nav className="fixed bottom-5 bg-dark flex gap-5 p-3 rounded-md z-10 ">
+      <nav className="fixed bottom-5 bg-dark flex gap-5 p-3 rounded-md z-20 ">
         {sections.map(({ name, icon, path }) => (
           <Square
             icon={icon}

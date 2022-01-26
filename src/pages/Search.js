@@ -5,26 +5,32 @@ import React, { useState } from "react";
 export default function Search() {
   const [recipes, setRecipes] = useState([]);
   const [recipeStatus, setRecipeStatus] = useState("idle");
-  function handleSearch(results, status) {
-    console.log(status);
-    setRecipes(results);
+  function handleSearch(data, status) {
+    console.log(data);
+    setRecipes(data.results);
     setRecipeStatus(status);
   }
   const changePositionStyle =
     recipeStatus !== "idle" ? "flex-1 overflow-auto" : "h-0 overflow-hidden";
   return (
-    <div className="text-white w-full h-full duration-1000  flex flex-col gap-y-8 overflow-hidden pt-5">
+    <div className="text-white container w-full h-full duration-1000  flex flex-col gap-y-8 overflow-hidden pt-5">
       <SearchInput handleSearch={handleSearch} />
       <div
-        className={`grid pb-[120px] grid-cols-[repeat(auto-fit,minmax(160px,1fr))] justify-items-center gap-5 duration-1000 ease-in-out transition-all ${changePositionStyle}`}
+        className={`grid pb-[120px] pt-[20px] px-4 grid-cols-[repeat(auto-fit,minmax(300px,1fr))] justify-items-center gap-8 duration-1000 ease-in-out transition-all ${changePositionStyle}`}
       >
         {recipes?.length > 0 &&
-          recipes.map(({ title, id, image }) => (
+          recipes.map((recipe) => (
             <DishCard
-              name={title}
-              key={id}
-              image={image}
-              href={`/plato/${id}`}
+              title={recipe.title}
+              key={recipe.id}
+              id={recipe.id}
+              diets={recipe.diets}
+              price={recipe.pricePerServing}
+              readyInMinutes={recipe.readyInMinutes}
+              healthScore={recipe.healthScore}
+              image={recipe.image}
+              isVegan={recipe.vegan}
+              href={`/plato/${recipe.id}`}
             />
           ))}
         {recipeStatus === "notFound" && (
