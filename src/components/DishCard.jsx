@@ -2,12 +2,13 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import Button from "./Button";
-import { useMenu } from "context/MenuContext";
+import { useMenu } from "hooks/useMenu";
 
 export default function DishCard(props) {
   const { id, title, image, href, isVegan, isVegetarian, isVeryHealthy } =
     props;
   const { menu, addToMenu, removeFromMenu } = useMenu();
+
   function carateristict(value) {
     return value ? (
       <i className="fas fa-check text-green-600"></i>

@@ -6,7 +6,7 @@ import { requester } from "./requester";
  * @returns Array de recetas
  */
 
-export default async function getRecipes(amount, querys) {
+export default async function getRecipes(querys, amount) {
   try {
     const { data } = await requester.get(
       `recipes/complexSearch?query=${querys}&addRecipeInformation=true&number=${amount}`

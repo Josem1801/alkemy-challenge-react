@@ -17,7 +17,7 @@ export default function SearchInput({ handleSearch }) {
       const joinWords = search.replace(/\s/g, "+");
       let status, results;
       try {
-        results = await getRecipes(10, joinWords);
+        results = await getRecipes(joinWords, 12);
         status = results instanceof Error ? "error" : "success";
         console.log();
         if (results?.results.length === 0) {
@@ -37,7 +37,7 @@ export default function SearchInput({ handleSearch }) {
     <form
       onSubmit={handleSubmit}
       className={
-        "flex h-fit justify-between relative bg-white items-center rounded-lg max-w-lg m-auto"
+        "flex h-fit justify-between relative bg-white items-center rounded-lg "
       }
     >
       <TextField

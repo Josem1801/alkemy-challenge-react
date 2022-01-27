@@ -6,10 +6,6 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 
 function Login() {
-  const initialValues = {
-    email: "",
-    password: "",
-  };
   const { handleLoginUser, loading } = useUser();
   const { getFieldProps, errors, touched, handleSubmit } = useFormik({
     validationSchema: Yup.object({
@@ -19,7 +15,10 @@ function Login() {
       password: Yup.string("La contraseña es requerida"),
     }),
     validateOnChange: false,
-    initialValues,
+    initialValues: {
+      email: "",
+      password: "",
+    },
     onSubmit: async function handleLogin({ email, password }) {
       handleLoginUser({ email, password });
     },
@@ -48,7 +47,11 @@ function Login() {
           errorMessage={errors.password}
           {...getFieldProps("password")}
         />
-        <Button className={`${loading && "bg-opacity-50"}`} disabled={loading}>
+        <Button
+          type="submit"
+          className={`${loading && "bg-opacity-50"}`}
+          disabled={loading}
+        >
           Iniciar sesión
         </Button>
       </form>

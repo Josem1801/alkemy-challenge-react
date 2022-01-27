@@ -14,7 +14,7 @@ export default function TextField({
     : "border-dark border-transparent border-[3px]";
   const [show, setShow] = useState(false);
   return (
-    <label className="text-gray-700  flex box-content flex-col justify-center  relative text-sm font-bold  transition-all">
+    <label className="text-gray-700 w-full flex box-content flex-col justify-center  relative text-sm font-bold  transition-all">
       <input
         {...props}
         type={show ? "text" : type}

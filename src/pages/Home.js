@@ -1,35 +1,39 @@
 import DishCard from "components/DishCard";
-import { useMenu } from "context/MenuContext";
-import React from "react";
-function acumulate(dishs, tag) {
-  return dishs.map((recipe) => recipe[tag]).reduce((a, b) => a + b);
-}
-function Home() {
-  const { menu } = useMenu();
+import { useMenu } from "hooks/useMenu";
+import React, { memo } from "react";
 
-  // menu.dishs.reduce((prev, act) => console.log(prev, act));
+function Home() {
+  const { menu, healthScore, menuPrice, readyInMinutes } = useMenu();
 
   return (
     <div className="container h-full pt-5 flex flex-col gap-y-5 text-white">
-      <h1 className=" text-5xl font-bold">Menu</h1>
+      <h1 className="text-primary text-5xl font-bold">Menu</h1>
       {menu.dishs.length < 1 ? (
         <p>
           Aún no hay platos en el menu, puedes agregarlos llengo al buscado que
           esta debajo :)
         </p>
       ) : (
-        <div className="grid grid-cols-3 grid-rows-2 text-center">
-          <span className="font-semibold text-base">Precio total</span>
-          <span className="font-semibold text-base">Puntos de salud</span>
-          <span className="font-semibold text-base">Tiempo de preparación</span>
+        <div className="grid grid-cols-3 grid-rows-[auto_25px] text-center gap-y-1 ">
+          {["Precio total", "Puntos de salud", "Tiempo de preparación"].map(
+            (name, idx) => (
+              <span
+                className="font-semibold text-sm sm:text-base grid items-center gap-y-1 h-full"
+                key={idx}
+              >
+                {name} <i className="fas fa-angle-double-down self-end"></i>
+              </span>
+            )
+          )}
+
           <span className="font-semibold text-sm underline">
-            ${acumulate(menu.dishs, "price")}
+            ${menuPrice()}
           </span>
           <span className="font-semibold text-sm underline">
-            {acumulate(menu.dishs, "healthScore")}
+            {healthScore()}
           </span>
           <span className="font-semibold text-sm underline">
-            {acumulate(menu.dishs, "readyInMinutes")} Minutos
+            {readyInMinutes()} Minutos
           </span>
         </div>
       )}
@@ -52,4 +56,4 @@ function Home() {
     </div>
   );
 }
-export default Home;
+export default memo(Home);

@@ -25,7 +25,7 @@ export default function Dish() {
         </div>
         <div className="grid grid-cols-2 grid-rows-3 grid-flow-row text-center">
           <h1 className="text-2xl font-bold col-span-2 ">
-            {dishInformation.title}
+            {dishInformation?.title}
           </h1>
         </div>
         <div

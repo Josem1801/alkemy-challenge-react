@@ -10,12 +10,16 @@ export default function Search() {
     setRecipeStatus(status);
   }
   const changePositionStyle =
-    recipeStatus !== "idle" ? "flex-1 overflow-auto" : "h-0 overflow-hidden";
+    recipeStatus !== "idle"
+      ? "flex-1 pb-[120px] overflow-hidden"
+      : "h-0 overflow-auto";
   return (
-    <div className="text-white container w-full h-full duration-1000  flex flex-col gap-y-8 overflow-hidden pt-5">
-      <SearchInput handleSearch={handleSearch} />
+    <div className="text-white container w-full h-full duration-1000  flex flex-col gap-y-8 pt-5 justify-center">
+      <div className="w-[250px] self-center">
+        <SearchInput handleSearch={handleSearch} />
+      </div>
       <div
-        className={`grid pb-[120px] pt-[20px] px-4 grid-cols-[repeat(auto-fit,minmax(300px,1fr))] justify-items-center gap-8 duration-1000 ease-in-out transition-all ${changePositionStyle}`}
+        className={`grid pt-[20px] px-4 grid-cols-[repeat(auto-fit,minmax(300px,1fr))] justify-items-center gap-8 duration-1000 ease-in-out transition-all ${changePositionStyle}`}
       >
         {recipes?.length > 0 &&
           recipes.map((recipe) => (
