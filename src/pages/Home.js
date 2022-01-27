@@ -26,14 +26,10 @@ function Home() {
             )
           )}
 
+          <span className="font-semibold text-sm underline">${menuPrice}</span>
+          <span className="font-semibold text-sm underline">{healthScore}</span>
           <span className="font-semibold text-sm underline">
-            ${menuPrice()}
-          </span>
-          <span className="font-semibold text-sm underline">
-            {healthScore()}
-          </span>
-          <span className="font-semibold text-sm underline">
-            {readyInMinutes()} Minutos
+            {readyInMinutes} Minutos
           </span>
         </div>
       )}
