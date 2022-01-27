@@ -6,7 +6,6 @@ export default function Search() {
   const [recipes, setRecipes] = useState([]);
   const [recipeStatus, setRecipeStatus] = useState("idle");
   function handleSearch(data, status) {
-    console.log(data.results);
     setRecipes(data.results);
     setRecipeStatus(status);
   }
