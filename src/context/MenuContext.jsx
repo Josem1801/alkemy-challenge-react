@@ -4,35 +4,8 @@ import Swal from "sweetalert2";
 export const MenuContext = createContext();
 
 function menuReducer(state, action) {
-  let isVegan;
-
   switch (action.type) {
     case "ADD_DISH":
-      if (state.dishs.length >= 4) {
-        Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: "Solo puedes agregar 4 platos",
-        });
-        return { ...state };
-      }
-      if (state.veganFoodCounter > 2) {
-        Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: "Solo puedes agregar como maximo 2 platos veganos",
-        });
-        return { ...state };
-      }
-      if (!action.payload.isVegan && state.dishs.length + 1 >= 3) {
-        Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: "Necesitas agregar minimo 2 platos veganos",
-        });
-        return { ...state };
-      }
-
       return {
         ...state,
         dishs: [...state.dishs, action.payload],
@@ -43,11 +16,8 @@ function menuReducer(state, action) {
     case "REMOVE_DISH":
       return {
         ...state,
-        dishs: state.dishs.filter(({ id, isVegan: vegan }) => {
-          isVegan = vegan;
-          return id !== action.payload;
-        }),
-        veganFoodCounter: isVegan
+        dishs: state.dishs.filter(({ id }) => id !== action.payload.dishId),
+        veganFoodCounter: action.payload.removedIsVegan
           ? (state.veganFoodCounter -= 1)
           : state.veganFoodCounter,
       };
@@ -66,7 +36,7 @@ const initialValue = {
 };
 export default function MenuProvider({ children }) {
   const [state, dispatch] = useReducer(menuReducer, initialValue);
-  console.log(state);
+
   return (
     <MenuContext.Provider value={{ state, dispatch }}>
       {children}
@@ -76,11 +46,33 @@ export default function MenuProvider({ children }) {
 
 export function useMenu() {
   const { state, dispatch } = useContext(MenuContext);
+  const { veganFoodCounter, dishs } = state;
+  function executeError(text) {
+    return Swal.fire({
+      icon: "error",
+      title: "Oops...",
+      text: text,
+    });
+  }
   function addToMenu(dish) {
+    if (dishs.length >= 4) {
+      executeError("Solo puedes agregar 4 platos");
+      return;
+    }
+    if (veganFoodCounter >= 2 && dish.isVegan) {
+      executeError("Solo puedes agregar como maximo 2 platos veganos");
+      return;
+    }
+
+    if (dishs.length - veganFoodCounter >= 2 && !dish.isVegan) {
+      executeError("Necesitas agregar un minimo de 2 platos veganos");
+      return;
+    }
+
     dispatch({ type: "ADD_DISH", payload: dish });
   }
-  function removeFromMenu(dishId) {
-    dispatch({ type: "REMOVE_DISH", payload: dishId });
+  function removeFromMenu(dishId, removedIsVegan) {
+    dispatch({ type: "REMOVE_DISH", payload: { dishId, removedIsVegan } });
   }
   return { menu: state, addToMenu, removeFromMenu };
 }

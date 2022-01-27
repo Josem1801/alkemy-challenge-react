@@ -6,7 +6,7 @@ export default function Search() {
   const [recipes, setRecipes] = useState([]);
   const [recipeStatus, setRecipeStatus] = useState("idle");
   function handleSearch(data, status) {
-    console.log(data);
+    console.log(data.results);
     setRecipes(data.results);
     setRecipeStatus(status);
   }
@@ -30,19 +30,17 @@ export default function Search() {
               healthScore={recipe.healthScore}
               image={recipe.image}
               isVegan={recipe.vegan}
+              isVegetarian={recipe.vegetarian}
+              isVeryHealthy={recipe.veryHealthy}
               href={`/plato/${recipe.id}`}
             />
           ))}
-        {recipeStatus === "notFound" && (
-          <div className=" text-center">
-            No se encontraron resultados en la busqueda
-          </div>
-        )}
-        {recipeStatus === "error" && (
-          <div className=" text-center">
-            Algo anda mal, no pudimos realizar la busqueda
-          </div>
-        )}
+        <div className=" text-center">
+          {recipeStatus === "notFound" &&
+            "No se encontraron resultados en la busqueda"}
+          {recipeStatus === "error" &&
+            " Algo anda mal, no pudimos realizar la busqueda"}
+        </div>
       </div>
     </div>
   );
