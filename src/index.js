@@ -2,13 +2,16 @@ import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
 import { BrowserRouter } from "react-router-dom";
-import UserContextPriver from "context/UserContext";
+import UserProvider from "context/UserContext";
 import "index.css";
+import MenuProvider from "context/MenuContext";
 ReactDOM.render(
   <BrowserRouter>
-    <UserContextPriver>
-      <App />
-    </UserContextPriver>
+    <UserProvider>
+      <MenuProvider>
+        <App />
+      </MenuProvider>
+    </UserProvider>
   </BrowserRouter>,
   document.getElementById("root")
 );

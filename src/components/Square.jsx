@@ -3,9 +3,9 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 export default function Square({ icon, text, active, onClick, to }) {
   const buttonActive = active ? "bg-primary shadow-shadow" : "";
-
+  const Tag = to ? Link : "button";
   return (
-    <Link
+    <Tag
       to={to}
       role="button"
       onClick={onClick}
@@ -15,7 +15,7 @@ export default function Square({ icon, text, active, onClick, to }) {
       <span className="absolute transition-all duration-500 opacity-0 group-hover:opacity-100 top-[-50px] min-w-[50px] bg-dark py-1 px-3 rounded-md  place-items-center  ">
         {text}
       </span>
-    </Link>
+    </Tag>
   );
 }
 

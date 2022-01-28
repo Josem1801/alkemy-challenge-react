@@ -1,18 +1,12 @@
 import Button from "components/Button";
 import TextField from "components/TextField";
 import useUser from "hooks/useUser";
-import React from "react";
-import { Navigate, useLocation } from "react-router-dom";
+import React, { memo } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { memo } from "react/cjs/react.development";
+
 function Login() {
-  const location = useLocation();
-  const initialValues = {
-    email: "",
-    password: "",
-  };
-  const { handleLoginUser, loading, isLog } = useUser();
+  const { handleLoginUser, loading } = useUser();
   const { getFieldProps, errors, touched, handleSubmit } = useFormik({
     validationSchema: Yup.object({
       email: Yup.string()
@@ -21,15 +15,15 @@ function Login() {
       password: Yup.string("La contraseña es requerida"),
     }),
     validateOnChange: false,
-    initialValues,
+    initialValues: {
+      email: "",
+      password: "",
+    },
     onSubmit: async function handleLogin({ email, password }) {
       handleLoginUser({ email, password });
     },
   });
 
-  if (isLog) {
-    return <Navigate to="/" state={{ from: location }} />;
-  }
   return (
     <div className="h-100 w-full  grid gap-6">
       <h1 className="text-center text-2xl font-semibold text-white">
@@ -53,7 +47,13 @@ function Login() {
           errorMessage={errors.password}
           {...getFieldProps("password")}
         />
-        <Button disabled={loading}>Iniciar sesión</Button>
+        <Button
+          type="submit"
+          className={`${loading && "bg-opacity-50"}`}
+          disabled={loading}
+        >
+          Iniciar sesión
+        </Button>
       </form>
     </div>
   );
