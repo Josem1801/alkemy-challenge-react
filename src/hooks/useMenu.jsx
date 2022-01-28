@@ -3,9 +3,9 @@ import { useState, useContext, useEffect } from "react";
 
 export function useMenu() {
   const { state, dispatch } = useContext(MenuContext);
-  const [menuPrice, setMenuPrice] = useState();
-  const [healthScore, setHealthScore] = useState();
-  const [readyInMinutes, setReadyInMinutes] = useState();
+  const [menuPrice, setMenuPrice] = useState(0);
+  const [healthScore, setHealthScore] = useState(0);
+  const [readyInMinutes, setReadyInMinutes] = useState(0);
   function addToMenu(dish) {
     dispatch({ type: "ADD_DISH", payload: dish });
   }
@@ -29,8 +29,10 @@ export function useMenu() {
   };
 }
 
+//Funcion acumuladora para sumar
 function acumulate(dishs, tag) {
   let total = dishs.map((recipe) => recipe[tag]).reduce((a, b) => a + b, 0);
+  //Si el numero no es entero, lo parsea a 2 decimales
   total = total % 1 == 0 ? total : total.toFixed(2);
-  return total;
+  return Number(total);
 }

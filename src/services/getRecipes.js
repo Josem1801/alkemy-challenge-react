@@ -1,8 +1,9 @@
 import { requester } from "./requester";
 
 /**
+ * Obtener una lista de recetas
+ * @param {string} querys querys para obtener recetas filtradas
  * @param {number} amount Cantidad de recetas a recibir
- * @param {string} [querys] querys para obtener recetas filtradas
  * @returns Array de recetas
  */
 

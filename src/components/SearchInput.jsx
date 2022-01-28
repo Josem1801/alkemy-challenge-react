@@ -1,12 +1,10 @@
-import React, { useContext } from "react";
+import React from "react";
 import TextField from "./TextField";
 import PropTypes from "prop-types";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { SearchContext } from "context/SearchContext";
 
-export default function SearchInput() {
-  const { setSearch } = useContext(SearchContext);
+export default function SearchInput({ handleSearch }) {
   const { getFieldProps, errors, touched, handleSubmit } = useFormik({
     validationSchema: Yup.object({
       search: Yup.string().min(3, "Ingresa mas de 3 carácteres").default(""),
@@ -15,7 +13,7 @@ export default function SearchInput() {
       search: "",
     },
     onSubmit: async ({ search }) => {
-      setSearch(search);
+      handleSearch(search);
     },
   });
 
