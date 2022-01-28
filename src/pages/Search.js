@@ -12,15 +12,14 @@ function Search() {
   function handleSearch() {
     setQuery(search);
   }
+  console.log("hola");
   useEffect(() => {
     handleSearch();
   }, [search]);
   const changePositionStyle =
-    status !== "idle"
-      ? "flex-1 pb-[120px] overflow-hidden"
-      : "h-0 overflow-auto";
+    status !== "idle" ? "flex-1 overflow-hidden" : "h-0 overflow-auto";
   return (
-    <div className="text-white container w-full h-full duration-1000  flex flex-col gap-y-8 pt-5 justify-center">
+    <div className="text-white container pb-[120px]  w-full h-full duration-1000 flex flex-col gap-y-8 pt-5 justify-center">
       <div className="w-[250px] self-center">
         <SearchInput />
       </div>
@@ -50,6 +49,8 @@ function Search() {
           {status === "error" &&
             " Algo anda mal, no pudimos realizar la busqueda"}
         </div>
+      </div>
+      <div className="w-[150px] m-auto">
         {recipes.length > 0 && (
           <Button
             className="col-span-2 px-3"

@@ -15,7 +15,6 @@ export default function SearchInput() {
       search: "",
     },
     onSubmit: async ({ search }) => {
-      console.log(search);
       setSearch(search);
     },
   });

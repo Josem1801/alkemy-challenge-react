@@ -13,9 +13,7 @@ function useRecipesByQuerys(pagination = 0) {
   async function handleRecipes(pag) {
     setLoading(true);
     try {
-      console.log(pag);
       const results = await getRecipes(joinWords(query), 6 + pag);
-      console.log(results);
       if (results instanceof Error) {
         setStatus("error");
         return;
@@ -26,7 +24,6 @@ function useRecipesByQuerys(pagination = 0) {
       }
       if (recipes.length > 0) {
         const paginationResults = results.results.slice(recipes.length);
-        console.log(paginationResults);
         setRecipes([...recipes, ...paginationResults]);
         setStatus("success");
         return;
