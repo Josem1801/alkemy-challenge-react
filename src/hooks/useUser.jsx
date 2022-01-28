@@ -11,6 +11,14 @@ export default function useUser() {
     setLoading(true);
     try {
       const { token } = await login({ email, password });
+      if (!token) {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Ocurrio un error al iniciar sesion, intentalo mas tarde",
+        });
+        return;
+      }
       setJwt(token);
       window.localStorage.setItem("jwt", token);
       Swal.fire({
