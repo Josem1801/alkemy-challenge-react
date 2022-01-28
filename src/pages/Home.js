@@ -10,7 +10,7 @@ function Home() {
       <h1 className="text-primary text-5xl font-bold">Menu</h1>
       {menu.dishs.length < 1 ? (
         <p>
-          Aún no hay platos en el menu, puedes agregarlos llengo al buscado que
+          Aún no hay platos en el menu, puedes agregarlos yendo al buscador que
           esta debajo :)
         </p>
       ) : (
