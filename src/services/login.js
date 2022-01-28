@@ -1,16 +1,16 @@
 import axios from "axios";
-
+const { REACT_APP_LOGIN_URL } = process.env;
 /**
  *
  * @param {Object} user - Cuenta del usuario
  * @param {string} user.email - Email del usuario
  * @param {string} user.password - Contraseña del usuario
- * @returns
+ * @returns A token
  */
 
 export default async function login({ email, password }) {
   try {
-    const res = await axios.post("http://challenge-react.alkemy.org/", {
+    const res = await axios.post(`${REACT_APP_LOGIN_URL}`, {
       email,
       password,
     });
