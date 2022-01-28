@@ -1,8 +1,8 @@
 import { requester } from "./requester";
 
 /**
- *
- * @param {id} amount Id de la receta
+ * Obtener una receta por id
+ * @param {number|string} id Id de la receta
  * @returns Objeto con la informacion de la receta
  */
 

@@ -28,7 +28,7 @@ export default function useUser() {
     } finally {
       setLoading(false);
     }
-  });
+  }, []);
   const logout = useCallback(() => {
     setJwt(null);
     window.localStorage.removeItem("jwt");
