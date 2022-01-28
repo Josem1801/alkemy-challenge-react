@@ -1,11 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import TextField from "./TextField";
 import PropTypes from "prop-types";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import getRecipes from "services/getRecipes";
+import { SearchContext } from "context/SearchContext";
 
-export default function SearchInput({ handleSearch }) {
+export default function SearchInput() {
+  const { setSearch } = useContext(SearchContext);
   const { getFieldProps, errors, touched, handleSubmit } = useFormik({
     validationSchema: Yup.object({
       search: Yup.string().min(3, "Ingresa mas de 3 carácteres").default(""),
@@ -14,22 +15,8 @@ export default function SearchInput({ handleSearch }) {
       search: "",
     },
     onSubmit: async ({ search }) => {
-      const joinWords = search.replace(/\s/g, "+");
-      let status, results;
-      try {
-        results = await getRecipes(joinWords, 12);
-        status = results instanceof Error ? "error" : "success";
-        console.log();
-        if (results?.results.length === 0) {
-          status = "notFound";
-        }
-      } catch (e) {
-        results = { results: [] };
-        status = "error";
-        console.log(`Ocurrio un error: ${e}`);
-      } finally {
-        handleSearch(results, status);
-      }
+      console.log(search);
+      setSearch(search);
     },
   });
 

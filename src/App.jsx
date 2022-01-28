@@ -8,6 +8,8 @@ import RequireAuth from "routes/private.routes";
 import Search from "pages/Search";
 import Dish from "pages/Dish";
 import Loged from "routes/loged.routes";
+import NotFound from "pages/404";
+import SearchProvider from "context/SearchContext";
 function App() {
   return (
     <Routes>
@@ -16,10 +18,13 @@ function App() {
           <Route path="login" element={<Login />} />
         </Route>
         <Route element={<RequireAuth />}>
-          <Route index element={<Home />} />
-          <Route path="buscar" element={<Search />} />
+          <Route element={<SearchProvider />}>
+            <Route index element={<Home />} />
+            <Route path="buscar" element={<Search />} />
+          </Route>
           <Route path="plato/:dishId" element={<Dish />} />
         </Route>
+        <Route element={<NotFound />} path="*" />
       </Route>
     </Routes>
   );

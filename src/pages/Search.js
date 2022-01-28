@@ -1,22 +1,28 @@
+import Button from "components/Button";
 import DishCard from "components/DishCard";
 import SearchInput from "components/SearchInput";
-import React, { useState } from "react";
+import { useSearch } from "context/SearchContext";
+import useRecipesByQuerys from "hooks/useRecipesByQuerys";
+import React, { memo, useEffect, useState } from "react";
 
-export default function Search() {
-  const [recipes, setRecipes] = useState([]);
-  const [recipeStatus, setRecipeStatus] = useState("idle");
-  function handleSearch(data, status) {
-    setRecipes(data.results);
-    setRecipeStatus(status);
+function Search() {
+  const [pagination, setPagination] = useState(0);
+  const { search } = useSearch();
+  const { recipes, setQuery, status, loading } = useRecipesByQuerys(pagination);
+  function handleSearch() {
+    setQuery(search);
   }
+  useEffect(() => {
+    handleSearch();
+  }, [search]);
   const changePositionStyle =
-    recipeStatus !== "idle"
+    status !== "idle"
       ? "flex-1 pb-[120px] overflow-hidden"
       : "h-0 overflow-auto";
   return (
     <div className="text-white container w-full h-full duration-1000  flex flex-col gap-y-8 pt-5 justify-center">
       <div className="w-[250px] self-center">
-        <SearchInput handleSearch={handleSearch} />
+        <SearchInput />
       </div>
       <div
         className={`grid pt-[20px] px-4 grid-cols-[repeat(auto-fit,minmax(300px,1fr))] justify-items-center gap-8 duration-1000 ease-in-out transition-all ${changePositionStyle}`}
@@ -39,12 +45,24 @@ export default function Search() {
             />
           ))}
         <div className=" text-center">
-          {recipeStatus === "notFound" &&
+          {status === "notFound" &&
             "No se encontraron resultados en la busqueda"}
-          {recipeStatus === "error" &&
+          {status === "error" &&
             " Algo anda mal, no pudimos realizar la busqueda"}
         </div>
+        {recipes.length > 0 && (
+          <Button
+            className="col-span-2 px-3"
+            background={loading ? "bg-opacity-40" : "bg-primary"}
+            disabled={loading}
+            onClick={() => setPagination((prev) => prev + 6)}
+          >
+            Mostra más
+          </Button>
+        )}
       </div>
     </div>
   );
 }
+
+export default memo(Search);
