@@ -3,7 +3,7 @@ Desarrollar una aplicación para crear una carta de opciones de menús para un h
 API externa y mostrará diferentes atributos a nivel individual de cada plato y del menú finalizado.
 
 # Before Starting
-- Instalar las dependencias con `yarn start`
+- Instalar las dependencias con `yarn`
 
 - Incluir las variables de entorno que se encuentran en el archivo `.env.example`
 
